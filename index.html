@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+   <title>Shopping Cart</title>
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" rel="stylesheet" />
+   <link href="style.css" rel="stylesheet">
+</head>
+
+<body>
+
+   <section>
+      <div class="container">
+         <div class="cart">
+            <div class="col-md-12 col-lg-10 mx-auto">
+               <div class="cart-item">
+                  <div class="row">
+                     <div class="col-md-7 center-item">
+                        <img src="images/product-1.png" alt="">
+                        <h5>iPhone 11 128GB Black</h5>
+                     </div>
+
+                     <div class="col-md-5 center-item">
+                        <div class="input-group number-spinner">
+                           <button class="btn btn-default"><i id="phoneButtonMinius" class="fas fa-minus"></i></button>
+                           <input type="text" class="form-control text-center" id="PhoneTextValue" value="1">
+                           <button class="btn btn-default"><i id="phoneButtonPlus" class="fas fa-plus"></i></button>
+                        </div>
+                        <h5>$ <span id="phoneValue">1219</span> </h5>
+                        <img src="images/remove.png" alt="" class="remove-item">
+                     </div>
+                  </div>
+               </div>
+
+               <div class="cart-item">
+                  <div class="row">
+                     <div class="col-md-7 center-item mx-auto">
+                        <img src="images/product-2.png" alt="">
+                        <h5>iPhone 11 Silicone Case - Black</h5>
+                     </div>
+                     <div class="col-md-5 center-item">
+                        <div class="input-group number-spinner">
+                           <button class="btn btn-default"><i id="casingButtonMinius" class="fas fa-minus"></i></button>
+                           <input type="text" class="form-control text-center" id="casingTextValue" value="1">
+                           <button class="btn btn-default"><i id="casingButtonPlus" class="fas fa-plus"></i></button>
+
+                        </div>
+                        <h5>$ <span id="casingValue">59</span> </h5>
+                        <img src="images/remove.png" alt="" class="remove-item">
+                     </div>
+                  </div>
+               </div>
+
+               <div class="cart-item">
+                  <div class="row">
+
+                     <div class="col-md-8">
+                        <h5>Subtotal: </h5>
+                        <h5>Tax:</h5>
+                        <h5>Total:</h5>
+                     </div>
+
+                     <div class="col-md-4 status">
+                        <h5>$ <span id="subtotal">1278</span> </h5>
+                        <h5>$0</h5>
+                        <h5>$<span id="total">1278</span> </h5>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-md-12 pt-4 pb-4">
+                  <button type="button" class="btn btn-success check-out">Check Out</button>
+               </div>
+            </div>
+         </div>
+      </div>
+   </section>
+
+
+   <script>
+      //button detect 
+      function buttonDetect(id)
+      {
+         const buttonId=document.getElementById(id);
+         return buttonId;
+      }
+      //value calculation
+     function textValue(textValue,number)
+     {
+      if(number==1)  textValue++;
+     if(number==-1)  textValue--;
+         
+         return textValue;
+     }
+     function valueChange(valueChange,price,number){
+      if(number==1)  valueChange=valueChange+price;
+     if(number==-1)  valueChange=valueChange-price;
+
+     return valueChange;
+     }
+
+      //phone event handler
+      function PhoneEventHandler(number){
+         const phoneTextValue=buttonDetect('PhoneTextValue');
+        var phoneTextValue1=parseFloat(phoneTextValue.value);
+        const  phoneValue=buttonDetect('phoneValue');
+        var  PhoneValueChange=parseFloat(phoneValue.innerText);
+         phoneTextValue.value=textValue(phoneTextValue1,number);
+         phoneValue.innerText=valueChange(PhoneValueChange,1219,number);
+         
+          //total and subtotal handle code 
+        const subtotal=buttonDetect('subtotal');
+        var subtotalValue=parseFloat(subtotal.innerText);
+        var exchangeValue=valueChange(subtotalValue,1219,number);
+        subtotal.innerText=exchangeValue;
+        const  total=buttonDetect('total');
+        total.innerText=exchangeValue;
+
+
+     }
+      
+       //casing event handler
+       function casingEventHandler(number){
+         const casingTextValue=buttonDetect('casingTextValue');
+        var casingTextValue1=parseFloat(casingTextValue.value);
+        const  casingValue=buttonDetect('casingValue');
+        var  casingValueChange=parseFloat(casingValue.innerText);
+        casingTextValue.value=textValue(casingTextValue1,number);
+        casingValue.innerText=valueChange(casingValueChange,59,number);
+
+        //total and subtotal handle code 
+        const subtotal=buttonDetect('subtotal');
+        var subtotalValue=parseFloat(subtotal.innerText);
+        var exchangeValue=valueChange(subtotalValue,59,number);
+        subtotal.innerText=exchangeValue;
+        const  total=buttonDetect('total');
+        total.innerText=exchangeValue;
+
+     }
+  
+  //phone handler
+      const phoneButtonPlus=buttonDetect('phoneButtonPlus');
+      phoneButtonPlus.addEventListener('click',function(){
+         PhoneEventHandler(1);
+      })
+      
+      const phoneButtonMinius=buttonDetect('phoneButtonMinius');
+      phoneButtonMinius.addEventListener('click',function(){
+         PhoneEventHandler(-1);
+      })
+
+    // casing  handler
+    const casingButtonPlus=buttonDetect('casingButtonPlus');
+      casingButtonPlus.addEventListener('click',function(){
+         casingEventHandler(1);
+      })
+      
+      const casingButtonMinius=buttonDetect('casingButtonMinius');
+      casingButtonMinius.addEventListener('click',function(){
+         casingEventHandler(-1);
+      })
+   
+   </script>
+   
+</body>
+
+</html>
